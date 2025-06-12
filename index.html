@@ -1,0 +1,385 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tríptico de DeAgencia.mx (DAVI con Comparación y Datos Curiosos)</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Merriweather+Sans:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Merriweather Sans', sans-serif;
+            background-color: #f3f4f6; /* bg-gray-100 */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            padding: 20px;
+        }
+        .trifold-container {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 1px; /* Creates thin borders */
+            max-width: 1200px;
+            width: 100%;
+            background-color: #d1d5db; /* bg-gray-300 for borders */
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+        }
+        .panel {
+            padding: 28px;
+            background-color: #ffffff; /* bg-white */
+            text-align: center;
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-start;
+            align-items: center;
+            min-height: 400px; /* Ensure panels have a consistent height */
+        }
+        /* Portada (Panel 1) */
+        .panel-cover {
+            background-image: linear-gradient(to top right, #1d4ed8, #2563eb); /* bg-gradient-to-tr from-blue-700 to-blue-600 */
+            color: white;
+            justify-content: center; /* Center content vertically */
+        }
+        .panel-cover h1 {
+            font-size: 2.5rem;
+            font-weight: 700;
+            line-height: 1.2;
+            text-shadow: 1px 1px 3px rgba(0,0,0,0.2);
+            margin-bottom: 12px;
+        }
+        .panel-cover p {
+            font-size: 1.25rem;
+            font-weight: 400;
+            margin-bottom: 20px;
+            opacity: 0.95;
+        }
+        /* General Panel Styles */
+        .panel h2 {
+            font-size: 1.75rem;
+            font-weight: 700;
+            margin-bottom: 24px;
+            color: #1d4ed8; /* text-blue-700 */
+        }
+        .panel ul {
+            list-style: none;
+            padding: 0;
+            width: 100%;
+        }
+        .panel li {
+            display: flex;
+            align-items: flex-start; /* Align icon to the top */
+            gap: 12px;
+            margin-bottom: 20px;
+            font-size: 1.1rem;
+            color: #4b5563; /* text-gray-600 */
+            text-align: left;
+        }
+        .icon-svg {
+             width: 28px;
+             height: 28px;
+             flex-shrink: 0;
+             color: #2563eb; /* text-blue-600 */
+             margin-top: 2px;
+        }
+        .davi-logo {
+            width: 120px;
+            height: 120px;
+            margin-bottom: 20px;
+        }
+        .whatsapp-button {
+            background-color: #25D366;
+            color: white;
+            padding: 14px 28px;
+            border-radius: 12px;
+            font-size: 1.2rem;
+            font-weight: 700;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(37, 211, 102, 0.3);
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .whatsapp-button:hover {
+            background-color: #1DA851;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(29, 168, 81, 0.4);
+        }
+        /* Modal Styles */
+        #gemini-modal { background-color: rgba(17, 24, 39, 0.6); backdrop-filter: blur(4px); }
+        #gemini-response h3 { font-size: 1.3rem; font-weight: bold; color: #1d4ed8; margin-top: 1.25rem; margin-bottom: 0.75rem; }
+        #gemini-response p { margin-bottom: 1rem; line-height: 1.6; color: #374151; }
+        #gemini-response strong { color: #111827; }
+        #gemini-response table { width: 100%; border-collapse: collapse; text-align: left; margin-top: 1rem; margin-bottom: 1rem; }
+        #gemini-response th, #gemini-response td { border: 1px solid #d1d5db; padding: 8px 12px; }
+        #gemini-response th { background-color: #f3f4f6; }
+        .loader { border: 8px solid #e5e7eb; border-top: 8px solid #2563eb; border-radius: 50%; width: 60px; height: 60px; animation: spin 1s linear infinite; }
+        @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+
+        /* Responsive Design */
+        @media (max-width: 900px) {
+            .trifold-container {
+                grid-template-columns: 1fr;
+                gap: 16px;
+                padding: 15px;
+                border: none;
+                background-color: transparent;
+                box-shadow: none;
+            }
+             .panel {
+                border-radius: 16px;
+                box-shadow: 0 4px 15px rgba(0,0,0,0.07);
+                min-height: auto;
+             }
+             .panel-cover h1 { font-size: 2rem; }
+        }
+    </style>
+</head>
+<body>
+    <div class="trifold-container">
+        <!-- Panel 1 (Portada) -->
+        <div class="panel panel-cover">
+            <img src="https://i.imgur.com/mUwG14i.jpeg" alt="Logo DeAgencia.mx" class="w-48 mb-6 bg-white p-4 rounded-xl shadow-lg" onerror="this.onerror=null; this.src='https://placehold.co/192x80/ffffff/1d4ed8?text=DeAgencia.mx';">
+            <h1>¡Adiós Agencia, Hola Auto Nuevo!</h1>
+            <p class="font-light">La forma inteligente de comprar tu próximo carro en Monterrey.</p>
+        </div>
+
+        <!-- Panel 2 (Interior Izquierdo - El Problema) -->
+        <div class="panel">
+            <h2>¿Te suena familiar?</h2>
+            <ul>
+                <li>
+                    <svg class="icon-svg" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M12 6v6h4.5m4.5 0a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" /></svg>
+                    <span>Perder horas yendo de una agencia a otra.</span>
+                </li>
+                <li>
+                     <svg class="icon-svg" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M9.879 7.519c1.171-1.025 3.071-1.025 4.242 0 1.172 1.025 1.172 2.687 0 3.712-.203.179-.43.326-.67.442-.745.361-1.45.999-1.45 1.827v.75M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Zm-9 5.25h.008v.008H12v-.008Z" /></svg>
+                    <span>Confundirte con tantos modelos, precios y versiones.</span>
+                </li>
+                <li>
+                     <svg class="icon-svg" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M18.364 18.364A9 9 0 0 0 5.636 5.636m12.728 12.728A9 9 0 0 1 5.636 5.636m12.728 12.728L5.636 5.636" /></svg>
+                    <span>Sentir que te venden "el que hay" en lugar del que tú quieres.</span>
+                </li>
+            </ul>
+        </div>
+        
+        <!-- Panel 3 (Interior Central - Asistente IA) -->
+        <div class="panel panel-davi">
+            <h2>¡Habla con DAVI!</h2>
+            <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" class="davi-logo rounded-full bg-blue-100 p-4">
+                <path d="M12 7V13" stroke="#2563eb" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/><path d="M12 17V17.01" stroke="#2563eb" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/><path d="M16 12C16 14.2091 14.2091 16 12 16C9.79086 16 8 14.2091 8 12C8 9.79086 9.79086 8 12 8" stroke="#374151" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/><path d="M9 3H15" stroke="#374151" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/><path d="M7 21H17" stroke="#374151" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/><path d="M4.5 10.5C5.88071 10.5 7 9.38071 7 8C7 6.61929 5.88071 5.5 4.5 5.5C3.11929 5.5 2 6.61929 2 8C2 9.38071 3.11929 10.5 4.5 10.5Z" fill="#2563eb"/><path d="M19.5 10.5C20.8807 10.5 22 9.38071 22 8C22 6.61929 20.8807 5.5 19.5 5.5C18.1193 5.5 17 6.61929 17 8C17 9.38071 18.1193 10.5 19.5 10.5Z" fill="#2563eb"/><rect x="5" y="14" width="14" height="7" rx="2" fill="#eff6ff" stroke="#374151" stroke-width="2"/>
+            </svg>
+            <p class="mb-4 text-gray-600">Tu asistente de IA para encontrar el auto perfecto.</p>
+            <div class="w-full text-left mt-auto">
+                <label for="car-prompt" class="font-semibold text-gray-700">Pide una sugerencia o una comparación:</label>
+                <textarea id="car-prompt" rows="2" class="w-full mt-2 p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:outline-none transition" placeholder="Ej: Compara Kia Seltos vs MG ZS"></textarea>
+                <div class="grid grid-cols-2 gap-2 mt-2">
+                    <button id="ask-suggest-button" class="w-full bg-blue-600 text-white font-bold py-3 px-2 rounded-lg hover:bg-blue-700 transition duration-300 flex items-center justify-center gap-2 text-sm">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.375 3.375 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z" /></svg>
+                        Sugerir
+                    </button>
+                    <button id="ask-compare-button" class="w-full bg-gray-700 text-white font-bold py-3 px-2 rounded-lg hover:bg-gray-800 transition duration-300 flex items-center justify-center gap-2 text-sm">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z" /></svg>
+                        Comparar
+                    </button>
+                </div>
+                 <button id="ask-fun-fact-button" class="w-full mt-2 bg-green-500 text-white font-bold py-3 px-2 rounded-lg hover:bg-green-600 transition duration-300 flex items-center justify-center gap-2 text-sm">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M14.828 14.828a4 4 0 01-5.656 0M9 10h.01M15 10h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
+                    Dato Curioso
+                </button>
+            </div>
+        </div>
+
+        <!-- Panel 4 (Contraportada Izquierda - Cómo Funciona) -->
+        <div class="panel">
+             <h2>¡Más fácil que pedir tacos!</h2>
+             <ul class="text-left text-gray-700 space-y-6">
+                <li class="items-start flex">
+                    <div class="flex-shrink-0 text-blue-600 font-bold text-3xl mr-4">1.</div>
+                    <div><strong class="text-gray-800">¡Hola, Davi!</strong><br>Inicia un chat por WhatsApp y cuéntale qué auto buscas.</div>
+                </li>
+                <li class="items-start flex">
+                    <div class="flex-shrink-0 text-blue-600 font-bold text-3xl mr-4">2.</div>
+                    <div><strong class="text-gray-800">Recibe y compara.</strong><br>Davi te enviará las mejores opciones directo de las agencias.</div>
+                </li>
+                <li class="items-start flex">
+                     <div class="flex-shrink-0 text-blue-600 font-bold text-3xl mr-4">3.</div>
+                     <div><strong class="text-gray-800">¡Listo para estrenar!</strong><br>Elige tu favorito y te ayudamos hasta la entrega en tu casa.</div>
+                </li>
+            </ul>
+        </div>
+        
+        <!-- Panel 5 (Contraportada Central - Beneficios) -->
+        <div class="panel">
+            <h2>¿Por qué DeAgencia.mx?</h2>
+            <ul>
+                <li>
+                    <svg class="icon-svg" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M21 12a2.25 2.25 0 0 0-2.25-2.25H15a3 3 0 1 1-6 0H5.25A2.25 2.25 0 0 0 3 12m18 0v6a2.25 2.25 0 0 1-2.25 2.25H5.25A2.25 2.25 0 0 1 3 18v-6m18 0V9M3 12V9m18 3a2.25 2.25 0 0 0-2.25-2.25H15a3 3 0 1 1-6 0H5.25A2.25 2.25 0 0 0 3 9m18 3h-5.25m-6.5 0H3" /></svg>
+                    <span><strong>Comodidad Total:</strong> Todo el proceso desde tu sofá, sin pisar una sola agencia.</span>
+                </li>
+                <li>
+                     <svg class="icon-svg" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="m3.75 13.5 10.5-11.25L12 10.5h8.25L9.75 21.75 12 13.5H3.75Z" /></svg>
+                     <span><strong>Ahorro Inteligente:</strong> Ahorra tiempo y compara precios reales para obtener la mejor oferta.</span>
+                </li>
+                 <li>
+                    <svg class="icon-svg" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M8.25 18.75a1.5 1.5 0 0 1-3 0m3 0a1.5 1.5 0 0 0-3 0m3 0h6m-9 0H3.375a1.125 1.125 0 0 1-1.125-1.125V14.25m17.25 4.5a1.5 1.5 0 0 1-3 0m3 0a1.5 1.5 0 0 0-3 0m3 0h1.125c.621 0 1.125-.504 1.125-1.125V14.25m-17.25 4.5v-1.875a3.375 3.375 0 0 1 3.375-3.375h9.75a3.375 3.375 0 0 1 3.375 3.375v1.875M10.5 6h3m-3 3h3" /></svg>
+                    <span><strong>Entrega a Domicilio:</strong> Recibe tu auto nuevo en la puerta de tu casa u oficina.</span>
+                </li>
+            </ul>
+        </div>
+        
+        <!-- Panel 6 (Contraportada Derecha - Contacto) -->
+        <div class="panel justify-center">
+            <h2 class="text-blue-700">¿Listo para estrenar?</h2>
+            <p class="mb-5 text-gray-600">¡Chatea con Davi ahora!</p>
+            <a href="https://wa.me/5218112345678?text=Hola!%20Quiero%20estrenar%20auto." target="_blank" class="whatsapp-button">
+                 <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="currentColor" viewBox="0 0 24 24"><path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946.003-6.556 5.338-11.891 11.893-11.891 3.181.001 6.167 1.24 8.413 3.488 2.245 2.248 3.481 5.236 3.48 8.414-.003 6.557-5.338 11.892-11.894 11.892-1.99 0-3.903-.52-5.687-1.475L.057 24zm6.597-3.807c1.676.995 3.276 1.591 5.392 1.592 5.448 0 9.886-4.434 9.889-9.885.002-5.462-4.415-9.89-9.881-9.892-5.452 0-9.887 4.434-9.889 9.884-.001 2.225.651 4.315 1.731 6.096l.335.566-.94 3.13z"/></svg>
+                Chatear en WhatsApp
+            </a>
+            <img src="https://i.imgur.com/mUwG14i.jpeg" alt="Logo DeAgencia.mx" class="w-32 mt-10" onerror="this.onerror=null; this.src='https://placehold.co/128x53/ffffff/1d4ed8?text=DeAgencia.mx';">
+        </div>
+    </div>
+
+    <!-- Gemini API Modal -->
+    <div id="gemini-modal" class="fixed inset-0 z-50 items-center justify-center hidden">
+        <div class="bg-white rounded-lg shadow-2xl p-6 m-4 max-w-2xl w-full relative max-h-[90vh] overflow-y-auto">
+            <button id="close-modal-button" class="absolute top-3 right-3 text-gray-500 hover:text-gray-800 text-3xl font-light">&times;</button>
+            <div id="gemini-content">
+                <div id="gemini-loader" class="flex justify-center items-center py-10"> <div class="loader"></div> </div>
+                <div id="gemini-response" class="hidden"></div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const suggestButton = document.getElementById('ask-suggest-button');
+        const compareButton = document.getElementById('ask-compare-button');
+        const funFactButton = document.getElementById('ask-fun-fact-button');
+        const modal = document.getElementById('gemini-modal');
+        const closeModalButton = document.getElementById('close-modal-button');
+        const promptTextarea = document.getElementById('car-prompt');
+        const responseContainer = document.getElementById('gemini-response');
+        const loader = document.getElementById('gemini-loader');
+
+        suggestButton.addEventListener('click', () => callDavi('suggest'));
+        compareButton.addEventListener('click', () => callDavi('compare'));
+        funFactButton.addEventListener('click', () => callDavi('fun_fact'));
+        closeModalButton.addEventListener('click', closeModal);
+        modal.addEventListener('click', (e) => { if (e.target === modal) closeModal(); });
+
+        async function callDavi(interactionType) {
+            const userInput = promptTextarea.value.trim();
+            let prompt = '';
+
+            switch (interactionType) {
+                case 'suggest':
+                    if (!userInput) {
+                        showInputError("¡Escribe qué auto buscas para darte una sugerencia!");
+                        return;
+                    }
+                    prompt = `Eres DAVI, un asistente experto y amigable para comprar autos en Monterrey, México. Hablas de tú y usas un español mexicano casual. Un usuario busca un auto: '${userInput}'. Sugiere 3 modelos (nuevos o seminuevos recientes) que se ajusten a sus necesidades. Para cada uno, incluye: Marca y Modelo, Precio Estimado (MXN), y un párrafo corto explicando por qué es buena opción. Formatea en Markdown con títulos ### para cada auto.`;
+                    break;
+                case 'compare':
+                    if (!userInput) {
+                        showInputError("¡Escribe qué autos quieres comparar!");
+                        return;
+                    }
+                    prompt = `Eres DAVI, un asistente experto en autos en México. Un usuario quiere comparar: '${userInput}'. Crea una tabla comparativa en Markdown con filas para: Rango de Precio (MXN), Rendimiento (Km/L), Nivel de Seguridad (1-5 estrellas), y Espacio Interior. Al final, añade un párrafo '### Veredicto de DAVI' con una recomendación amigable sobre cuál es mejor para diferentes perfiles (ej. familias, ciudad, etc.).`;
+                    break;
+                case 'fun_fact':
+                    prompt = `Eres DAVI, un asistente de autos amigable con español mexicano. Dame un dato curioso, sorprendente o divertido sobre el mundo de los automóviles que sea corto y fácil de entender.`;
+                    break;
+            }
+
+            openModal();
+            try {
+                const payload = { contents: [{ role: "user", parts: [{ text: prompt }] }] };
+                const apiKey = "AIzaSyA4DQTlQFE4_m7YbLYWrs1KdYExKjS2PSo"; // Handled by environment
+                const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${apiKey}`;
+                const response = await fetch(apiUrl, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(payload)
+                });
+                if (!response.ok) throw new Error(`API Error: ${response.statusText}`);
+                const result = await response.json();
+                let text = 'No pude encontrar una respuesta. Intenta de nuevo.';
+                if (result.candidates?.[0]?.content?.parts?.[0]?.text) {
+                     text = result.candidates[0].content.parts[0].text;
+                }
+                displayResponse(text);
+            } catch (error) {
+                console.error("Error calling Gemini API:", error);
+                displayResponse('¡Ups! Algo salió mal. Por favor, intenta de nuevo más tarde.');
+            }
+        }
+        
+        function markdownToHtml(text) {
+            let html = text
+                .replace(/^### (.*$)/gim, '<h3>$1</h3>')
+                .replace(/\*\*(.*?)\*\*/gim, '<strong>$1</strong>')
+                .replace(/\*(.*?)\*/gim, '<em>$1</em>');
+            
+            const tableRegex = /((?:\|.*\|(?:\r?\n)?)+)/g;
+            html = html.replace(tableRegex, (tableMarkdown) => {
+                const rows = tableMarkdown.trim().split(/\r?\n/);
+                if (rows.length < 2) return tableMarkdown; // Not a valid table
+
+                let table = '<table>';
+                const headerLine = rows.shift();
+                const headerCells = headerLine.split('|').slice(1, -1).map(c => c.trim());
+                table += '<thead><tr>';
+                headerCells.forEach(c => table += `<th>${c}</th>`);
+                table += '</tr></thead>';
+
+                if (rows[0] && /\|-*\s*\|/.test(rows[0])) {
+                    rows.shift();
+                }
+
+                table += '<tbody>';
+                rows.forEach(rowLine => {
+                    const rowCells = rowLine.split('|').slice(1, -1).map(c => c.trim());
+                    table += '<tr>';
+                    rowCells.forEach(c => table += `<td>${c}</td>`);
+                    table += '</tr>';
+                });
+                table += '</tbody></table>';
+                return table;
+            });
+            
+            return html.replace(/\n/g, '<br>');
+        }
+
+        function displayResponse(text) {
+            responseContainer.innerHTML = markdownToHtml(text);
+            loader.classList.add('hidden');
+            responseContainer.classList.remove('hidden');
+        }
+        
+        function openModal() {
+            modal.classList.remove('hidden');
+            modal.classList.add('flex');
+            loader.classList.remove('hidden');
+            responseContainer.classList.add('hidden');
+            responseContainer.innerHTML = '';
+        }
+
+        function closeModal() {
+            modal.classList.add('hidden');
+            modal.classList.remove('flex');
+        }
+        
+        function showInputError(message) {
+            promptTextarea.placeholder = message;
+            promptTextarea.classList.add('border-red-500', 'placeholder-red-500');
+            setTimeout(() => {
+                promptTextarea.classList.remove('border-red-500', 'placeholder-red-500');
+                promptTextarea.placeholder = "Ej: Compara Kia Seltos vs MG ZS";
+            }, 3000);
+        }
+    </script>
+</body>
+</html>
