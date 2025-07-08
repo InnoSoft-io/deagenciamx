@@ -432,7 +432,7 @@
                     </select>
                 </div>
 
-                <button type="submit"
+                <button type="submit" id="button-send-data"
                     class="w-full bg-blue-600 text-white font-bold py-3 px-4 rounded-lg hover:bg-blue-700 transition duration-300">
                     Enviar mis datos
                 </button>
@@ -466,6 +466,7 @@
         const promptTextarea = document.getElementById('car-prompt');
         const responseContainer = document.getElementById('gemini-response');
         const loader = document.getElementById('gemini-loader');
+        const buttonSendData = document.getElementById('button-send-data');
 
         suggestButton.addEventListener('click', () => callDavi('suggest'));
         compareButton.addEventListener('click', () => callDavi('compare'));
@@ -601,6 +602,9 @@
             };
 
             try {
+                buttonSendData.disabled = true;
+                buttonSendData.innerHTML = "Enviando...";
+                buttonSendData.classList.add("opacity-50", "cursor-not-allowed", "bg-gray-400");
                 const response = await fetch('https://api.deagencia.mx/api/leads', {
                     method: 'POST',
                     headers: {
@@ -617,6 +621,9 @@
                     msgEl.textContent = '¡Gracias! Te contactaremos pronto.';
                     msgEl.classList.remove('text-red-600');
                     msgEl.classList.add('text-green-600');
+                    buttonSendData.classList.remove("opacity-50", "cursor-not-allowed", "bg-gray-400");
+                    buttonSendData.disabled = false;
+                    buttonSendData.innerHTML = "Enviar mis datos";
                     form.reset();
                 } else {
                     throw new Error(result.message || 'Error al enviar el formulario');
@@ -626,6 +633,9 @@
                 msgEl.textContent = error.message || 'Error al enviar. Intenta más tarde.';
                 msgEl.classList.remove('text-green-600');
                 msgEl.classList.add('text-red-600');
+                buttonSendData.classList.remove("opacity-50", "cursor-not-allowed", "bg-gray-400");
+                buttonSendData.disabled = false;
+                buttonSendData.innerHTML = "Enviar mis datos";
             }
         });
     </script>
